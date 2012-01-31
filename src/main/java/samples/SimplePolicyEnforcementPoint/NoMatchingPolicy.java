@@ -41,7 +41,7 @@ import org.ebayopensource.aegis.Subject;
   * </ul>
   *
   */
-public class NoMAtchingPolicy
+public class NoMatchingPolicy
 {
     static public void main(String[] args) 
     {
