@@ -8,7 +8,7 @@
  *     http://www.apache.org/licenses/LICENSE-2.0
  * 
 *******************************************************************************/
-package org.ebayopensource.aegis.sample.SimplePolicyEnforcementPoint;
+package samples.SimplePolicyEnforcementPoint;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,19 +27,21 @@ import org.ebayopensource.aegis.Subject;
   *  is based on "deny-overrides" algorithm.
   * <p>The policy states:
   * <p> 
-  * Users who have <b>manager</b> role are <b>PERMITTED</b> to perorm action
+  * Users who have <b>manager</b> role are <b>PERMITTED</b> to perform action
   * <b>addItem</b> on  resource <b>http://www.ebay.com/xxx</b> provided
   * they are authenticated at <b>authlevel &gt; 2</b> and auhenticated by
   * <b>authn.idp  = EBAY</b>.
   *<p> 
-  * It demonstrates the decision returned under the following scenario:
+  * It demonstrates the different decisions returned under the
+  * following 3 scenarios:
   * <ul>
-  *  <li>Subject, Resource, Action match, authn.level is 5 and authn.idp is missing  - policy matches, decision is DENY
-  s
+  *  <li>Subject does not match - falls back to DENY:
+  *  <li>Resource does not match - policy does not match, falls back to DENY:
+  *  <li>Action does not match - policy does not match, falls back to DENY:
   * </ul>
   *
   */
-public class DecisionForPartialConditionMatch2
+public class NoMAtchingPolicy
 {
     static public void main(String[] args) 
     {
@@ -51,22 +53,21 @@ public class DecisionForPartialConditionMatch2
             // Get PDP instance
             PolicyDecisionPoint pdp = PolicyEnforcementPoint.getPDP(props);
             
-            // Scenario 6 - matching policy authn.level is 4 no idp
-            System.out.println("===== Scenario 6 - matching policy, level=4 ==");
-            List<Subject> subjects = new ArrayList<Subject>();
-            Subject sub1 = new Subject("role", "manager");
-            subjects.add(sub1);
-            Resource resource = new Resource("web", "http://www.ebay.com/xxx");
+            // Scenarios 1,2,3 - if Subject, Resource and Actions dont match
+            System.out.println("===== Scenarios 1,2,3 - no matching policy ==");
+            List<Subject> emplsubjects = new ArrayList<Subject>();
+            Subject emprole = new Subject("role", "employee");
+            emplsubjects.add(emprole);
+            Resource yyyresource = new Resource("web", "http://www.ebay.com/yyy");
             Action craction = new Action("cmd", "createItem");
-            Action action = new Action("cmd", "addItem");
-            List<Environment> env6 = new ArrayList<Environment>();
-            Environment parsession = new Environment("session", "env6");
-            parsession.setAttribute("authn.level", new Integer(4));
-            env6.add(parsession);
-            Decision decision6 = 
-                pdp.getPolicyDecision(subjects, resource, action, env6);
-            System.out.println("DECISION : "+ decision6.getTypeStr());
-            System.out.println("decision="+decision6);
+            List<Environment> env1 = new ArrayList<Environment>();
+
+            Decision decision1 = 
+                pdp.getPolicyDecision(emplsubjects, yyyresource, craction, env1);
+
+            int effect = decision1.getType();
+            System.out.println("DECISION : "+ decision1.getTypeStr());
+            System.out.println("decision = "+decision1);
             System.out.println("==========================================");
 
         } catch (Exception ex) {

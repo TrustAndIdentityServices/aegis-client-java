@@ -8,7 +8,7 @@
  *     http://www.apache.org/licenses/LICENSE-2.0
  * 
 *******************************************************************************/
-package org.ebayopensource.aegis.sample.SimplePolicyEnforcementPoint;
+package samples.SimplePolicyEnforcementPoint;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +32,13 @@ import org.ebayopensource.aegis.Subject;
   * they are authenticated at <b>authlevel &gt; 2</b> and auhenticated by
   * <b>authn.idp  = EBAY</b>.
   *<p> 
-  * It demonstrates the decision returned under the following scenario:
+  * It demonstrates the decision returned under the  following scenario:
   * <ul>
-  *  <li>Subject, Resource, Action match, authn.level is 5 and authn.idp is EBAY  - policy matches, decision is PERMIT
+  *  <li>Subject, Resource, Action match, authn.level is 1  - policy matches, but decision is DENY with Advice on how to authn the user.
   * </ul>
   *
   */
-public class DecisionWithAllMatches
+public class DecisionForPartialConditionMatch1
 {
     static public void main(String[] args) 
     {
@@ -50,23 +50,23 @@ public class DecisionWithAllMatches
             // Get PDP instance
             PolicyDecisionPoint pdp = PolicyEnforcementPoint.getPDP(props);
             
-            // Scenario 7 - matching polocy authn.level is 4 and id is EBAY
-            System.out.println("===== Scenario 7 - matching policy, both matching conditions ==");
+            // Scenarios 5 - Policy match - authn at level 1
 
             List<Subject> subjects = new ArrayList<Subject>();
             Subject sub1 = new Subject("role", "manager");
             subjects.add(sub1);
+            System.out.println("===== Scenario 5 - matching policy, authn.level=1 ==");
             Resource resource = new Resource("web", "http://www.ebay.com/xxx");
             Action action = new Action("cmd", "addItem");
-            List<Environment> env7 = new ArrayList<Environment>();
-            Environment goodsession = new Environment("session", "env7");
-            goodsession.setAttribute("authn.level", new Integer(4));
-            goodsession.setAttribute("authn.idp", "EBAY");
-            env7.add(goodsession);
-            Decision decision7 = 
-                pdp.getPolicyDecision(subjects, resource, action, env7);
-            System.out.println("DECISION : "+ decision7.getTypeStr());
-            System.out.println("decision="+decision7);
+            List<Environment> env5 = new ArrayList<Environment>();
+            Environment envsession = new Environment("session", "env5");
+            envsession.setAttribute("authn.level", new Integer(1));
+            env5.add(envsession);
+            Decision decision5 = 
+                pdp.getPolicyDecision(subjects, resource, action, env5);
+            System.out.println("DECISION : "+ decision5.getTypeStr());
+            System.out.println("decision="+decision5);
+
             System.out.println("==========================================");
 
         } catch (Exception ex) {

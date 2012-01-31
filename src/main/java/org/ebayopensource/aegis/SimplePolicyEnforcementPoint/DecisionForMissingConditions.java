@@ -8,7 +8,7 @@
  *     http://www.apache.org/licenses/LICENSE-2.0
  * 
 *******************************************************************************/
-package org.ebayopensource.aegis.sample.SimplePolicyEnforcementPoint;
+package samples.SimplePolicyEnforcementPoint;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
