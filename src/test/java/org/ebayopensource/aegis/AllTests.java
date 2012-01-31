@@ -15,7 +15,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	PEPTests.class
+	PEPTest.class
 })
 public class AllTests {
 
