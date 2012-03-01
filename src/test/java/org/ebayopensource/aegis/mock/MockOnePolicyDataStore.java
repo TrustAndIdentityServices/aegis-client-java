@@ -13,14 +13,13 @@ package org.ebayopensource.aegis.mock;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ebayopensource.aegis.Action;
-import org.ebayopensource.aegis.Condition;
+import org.ebayopensource.aegis.Assertion;
 import org.ebayopensource.aegis.Effect;
 import org.ebayopensource.aegis.Expression;
 import org.ebayopensource.aegis.Policy;
 import org.ebayopensource.aegis.PolicyStore;
-import org.ebayopensource.aegis.Resource;
-import org.ebayopensource.aegis.Subject;
+import org.ebayopensource.aegis.Rule;
+import org.ebayopensource.aegis.Target;
 
 /**
   * Mock for a single policy :
@@ -43,28 +42,33 @@ public class MockOnePolicyDataStore implements PolicyStore
     }
     public List<Policy> getAllPolicies()
     {
-        Expression<Subject> subjects = new Expression<Subject>();
-        Subject sub1 = new Subject("role", "manager");
-        subjects.add(sub1);
+        //Expression<Subject> subjects = new Expression<Subject>();
+        //Subject sub1 = new Subject("role", "manager");
+        //subjects.add(sub1);
 
-        List<Resource> resources = new ArrayList<Resource>();
-        Resource res1 = new Resource("web","http://www.ebay.com/xxx" );
-        resources.add(res1);
+        List<Target> targets = new ArrayList<Target>();
+        Target res1 = new Target("web","http://www.ebay.com/xxx" );
+        targets.add(res1);
 
-        List<Action> actions = new ArrayList<Action>();
-        Action action1 = new Action("webcmd", "addItem");
-        actions.add(action1);
+        Target action1 = new Target("webcmd", "addItem");
+        targets.add(action1);
 
         Effect effect = new Effect(Effect.PERMIT);
 
-        Expression<Condition> conditions = new Expression<Condition>();
-        Condition cond1 = new Condition("authn", "authncondition1");
-        cond1.addExpr("authn.level", Condition.OP_GT,  new Integer(2));
-        cond1.addExpr("authn.idp", Condition.OP_EQ,  "EBAY");
+        Expression<Assertion> assertions = new Expression<Assertion>();
+        Assertion a1 = new Assertion("authn", "authncondition1");
+        a1.setCExpr("authn.level", Assertion.OP_GT,  new Integer(2));
+        Assertion a2 = new Assertion("authn", "authncondition2");
+        a2.setCExpr("authn.idp", Assertion.OP_EQ,  "EBAY");
 
-        conditions.add(cond1);
+        assertions.add(a1);
+        assertions.add(a2);
+        
+        Rule r = new Rule("rule1", "desc", assertions);
+        Expression<Rule> rexp = new Expression<Rule>();
+        rexp.add(r);
 
-        Policy pol1 = new Policy(subjects, resources, actions, effect, conditions);
+        Policy pol1 = new Policy("samplePolicy", "Sample Policy", targets, rexp, effect);
 
         List<Policy> policies = new ArrayList<Policy>();
         policies.add(pol1);

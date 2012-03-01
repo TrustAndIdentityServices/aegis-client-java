@@ -14,13 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.ebayopensource.aegis.Action;
 import org.ebayopensource.aegis.Decision;
 import org.ebayopensource.aegis.Environment;
 import org.ebayopensource.aegis.PolicyDecisionPoint;
 import org.ebayopensource.aegis.PolicyEnforcementPoint;
-import org.ebayopensource.aegis.Resource;
-import org.ebayopensource.aegis.Subject;
+import org.ebayopensource.aegis.Target;
 
 /**
   * This sample uses the single PERMIT policy in policies.json file and
@@ -34,7 +32,7 @@ import org.ebayopensource.aegis.Subject;
   *<p> 
   * It demonstrates the decision returned under the following scenario:
   * <ul>
-  *  <li>Subject, Resource, Action match, authn.level is 5 and authn.idp is missing  - policy matches, decision is DENY
+  *  <li>Subject, Resource, Action match, authn.level is 4 and authn.idp is missing  - policy matches, decision is DENY
   s
   * </ul>
   *
@@ -53,18 +51,18 @@ public class DecisionForPartialConditionMatch2
             
             // Scenario 6 - matching policy authn.level is 4 no idp
             System.out.println("===== Scenario 6 - matching policy, level=4 ==");
-            List<Subject> subjects = new ArrayList<Subject>();
-            Subject sub1 = new Subject("role", "manager");
-            subjects.add(sub1);
-            Resource resource = new Resource("web", "http://www.ebay.com/xxx");
-            Action craction = new Action("cmd", "createItem");
-            Action action = new Action("cmd", "addItem");
+            //List<Subject> subjects = new ArrayList<Subject>();
+            //Subject sub1 = new Subject("role", "manager");
+            //subjects.add(sub1);
+            Target target = new Target("web", "http://www.ebay.com/xxx");
+            //Action craction = new Action("cmd", "createItem");
+            //Action action = new Action("cmd", "addItem");
             List<Environment> env6 = new ArrayList<Environment>();
             Environment parsession = new Environment("session", "env6");
-            parsession.setAttribute("authn.level", new Integer(4));
+            parsession.setAttribute("authn.level", "4");
             env6.add(parsession);
             Decision decision6 = 
-                pdp.getPolicyDecision(subjects, resource, action, env6);
+                pdp.getPolicyDecision(target, env6);
             System.out.println("DECISION : "+ decision6.getTypeStr());
             System.out.println("decision="+decision6);
             System.out.println("==========================================");

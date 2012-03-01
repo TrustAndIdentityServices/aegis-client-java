@@ -14,13 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.ebayopensource.aegis.Action;
 import org.ebayopensource.aegis.Decision;
 import org.ebayopensource.aegis.Environment;
 import org.ebayopensource.aegis.PolicyDecisionPoint;
 import org.ebayopensource.aegis.PolicyEnforcementPoint;
-import org.ebayopensource.aegis.Resource;
-import org.ebayopensource.aegis.Subject;
+import org.ebayopensource.aegis.Target;
 
 /**
   * This sample uses the single PERMIT policy in policies.json file and
@@ -34,7 +32,7 @@ import org.ebayopensource.aegis.Subject;
   *<p> 
   * It demonstrates the decision returned under the following scenario:
   * <ul>
-  *  <li>Subject, Resource, Action match, authn.level is 5 and authn.idp is EBAY  - policy matches, decision is PERMIT
+  *  <li>Subject, Resource, Action match, authn.level is 4 and authn.idp is EBAY  - policy matches, decision is PERMIT
   * </ul>
   *
   */
@@ -53,18 +51,22 @@ public class DecisionWithAllMatches
             // Scenario 7 - matching polocy authn.level is 4 and id is EBAY
             System.out.println("===== Scenario 7 - matching policy, both matching conditions ==");
 
-            List<Subject> subjects = new ArrayList<Subject>();
-            Subject sub1 = new Subject("role", "manager");
-            subjects.add(sub1);
-            Resource resource = new Resource("web", "http://www.ebay.com/xxx");
-            Action action = new Action("cmd", "addItem");
+            //List<Subject> subjects = new ArrayList<Subject>();
+            //Subject sub1 = new Subject("role", "manager");
+            //subjects.add(sub1);
+            Target target = new Target("web", "http://www.ebay.com/xxx");
+            //Action action = new Action("cmd", "CMDL1");
             List<Environment> env7 = new ArrayList<Environment>();
             Environment goodsession = new Environment("session", "env7");
-            goodsession.setAttribute("authn.level", new Integer(4));
+            goodsession.setAttribute("authn.level", "4");
+            goodsession.setAttribute("authn.authenticated", "true");
             goodsession.setAttribute("authn.idp", "EBAY");
+            goodsession.setAttribute("authn.duration", new Integer(1000));
+            goodsession.setAttribute("authn.token", "EBAY_COOKIE");
+
             env7.add(goodsession);
             Decision decision7 = 
-                pdp.getPolicyDecision(subjects, resource, action, env7);
+                pdp.getPolicyDecision(target, env7);
             System.out.println("DECISION : "+ decision7.getTypeStr());
             System.out.println("decision="+decision7);
             System.out.println("==========================================");

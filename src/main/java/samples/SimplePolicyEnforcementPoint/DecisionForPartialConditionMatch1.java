@@ -14,13 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.ebayopensource.aegis.Action;
+import org.ebayopensource.aegis.Target;
 import org.ebayopensource.aegis.Decision;
 import org.ebayopensource.aegis.Environment;
 import org.ebayopensource.aegis.PolicyDecisionPoint;
 import org.ebayopensource.aegis.PolicyEnforcementPoint;
-import org.ebayopensource.aegis.Resource;
-import org.ebayopensource.aegis.Subject;
 
 /**
   * This sample uses the single PERMIT policy in policies.json file and
@@ -52,18 +50,18 @@ public class DecisionForPartialConditionMatch1
             
             // Scenarios 5 - Policy match - authn at level 1
 
-            List<Subject> subjects = new ArrayList<Subject>();
-            Subject sub1 = new Subject("role", "manager");
-            subjects.add(sub1);
+            //List<Subject> subjects = new ArrayList<Subject>();
+            //Subject sub1 = new Subject("role", "manager");
+            //subjects.add(sub1);
             System.out.println("===== Scenario 5 - matching policy, authn.level=1 ==");
-            Resource resource = new Resource("web", "http://www.ebay.com/xxx");
-            Action action = new Action("cmd", "addItem");
+            Target target = new Target("web", "http://www.ebay.com/xxx");
+            //Action action = new Action("cmd", "addItem");
             List<Environment> env5 = new ArrayList<Environment>();
             Environment envsession = new Environment("session", "env5");
-            envsession.setAttribute("authn.level", new Integer(1));
+            envsession.setAttribute("authn.level", "1");
             env5.add(envsession);
             Decision decision5 = 
-                pdp.getPolicyDecision(subjects, resource, action, env5);
+                pdp.getPolicyDecision(target, env5);
             System.out.println("DECISION : "+ decision5.getTypeStr());
             System.out.println("decision="+decision5);
 

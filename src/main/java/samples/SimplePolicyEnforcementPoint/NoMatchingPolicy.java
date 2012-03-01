@@ -14,13 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.ebayopensource.aegis.Action;
 import org.ebayopensource.aegis.Decision;
 import org.ebayopensource.aegis.Environment;
 import org.ebayopensource.aegis.PolicyDecisionPoint;
 import org.ebayopensource.aegis.PolicyEnforcementPoint;
-import org.ebayopensource.aegis.Resource;
-import org.ebayopensource.aegis.Subject;
+import org.ebayopensource.aegis.Target;
 
 /**
   * This sample uses the single PERMIT policy in policies.json file and
@@ -55,15 +53,15 @@ public class NoMatchingPolicy
             
             // Scenarios 1,2,3 - if Subject, Resource and Actions dont match
             System.out.println("===== Scenarios 1,2,3 - no matching policy ==");
-            List<Subject> emplsubjects = new ArrayList<Subject>();
-            Subject emprole = new Subject("role", "employee");
-            emplsubjects.add(emprole);
-            Resource yyyresource = new Resource("web", "http://www.ebay.com/yyy");
-            Action craction = new Action("cmd", "createItem");
+            //List<Subject> emplsubjects = new ArrayList<Subject>();
+            //Subject emprole = new Subject("role", "employee");
+            //emplsubjects.add(emprole);
+            Target yyytarget = new Target("web", "http://www.ebay.com/yyy");
+            //Action craction = new Action("cmd", "createItem");
             List<Environment> env1 = new ArrayList<Environment>();
 
             Decision decision1 = 
-                pdp.getPolicyDecision(emplsubjects, yyyresource, craction, env1);
+                pdp.getPolicyDecision(yyytarget,  env1);
 
             int effect = decision1.getType();
             System.out.println("DECISION : "+ decision1.getTypeStr());
