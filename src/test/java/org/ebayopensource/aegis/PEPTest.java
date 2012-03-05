@@ -19,6 +19,7 @@ import org.ebayopensource.aegis.Environment;
 import org.ebayopensource.aegis.PolicyDecisionPoint;
 import org.ebayopensource.aegis.PolicyEnforcementPoint;
 import org.ebayopensource.aegis.Target;
+import org.ebayopensource.aegis.debug.Debug;
 
 import static org.junit.Assert.*;
 import org.junit.After;
@@ -151,6 +152,7 @@ public class PEPTest
     @Test
     public void testPEPScenario7() {
 
+        Debug.message("testPEPScenario7", "START");
         //List<Subject> subjects = new ArrayList<Subject>();
         //Subject sub1 = new Subject("role", "manager");
         //subjects.add(sub1);
@@ -158,12 +160,15 @@ public class PEPTest
         Environment goodsession = new Environment("session", "env7");
         goodsession.setAttribute("authn.level", "4");
         goodsession.setAttribute("authn.idp", "EBAY");
+        goodsession.setAttribute("role", "manager");
+
         env7.add(goodsession);
         Target target = new Target("web", "http://www.ebay.com/xxx");
         //Action action = new Action("cmd", "addItem");
         Decision decision7 = 
             pdp.getPolicyDecision(target, env7);
         int effect = decision7.getType();
+        Debug.message("testPEPScenario7", "END:"+decision7);
         assertEquals(effect, Decision.EFFECT_PERMIT);
     }
 }

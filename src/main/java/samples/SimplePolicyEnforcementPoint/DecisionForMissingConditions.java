@@ -28,7 +28,7 @@ import org.ebayopensource.aegis.Target;
   * <p> 
   * Users who have <b>manager</b> role are <b>PERMITTED</b> to perform action
   * <b>addItem</b> on  resource <b>http://www.ebay.com/xxx</b> provided
-  * they are authenticated at <b>authlevel &gt; 2</b> and auhenticated by
+  * they are authenticated at <b>auth.level &gt; 2</b> and authenticated by
   * <b>authn.idp  = EBAY</b>.
   *<p> 
   * It demonstrates the decision returned under the following scenario:
