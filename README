@@ -36,9 +36,19 @@ Prerequisites :
 3) Build and run tests :
    Select root of the eclipse project - execute "Run As..." -> 'maven test' 
 
-4) Execute AegisSample' :
+4a) Test drive Java SE samples : Standalone Java appl :Execute AegisSample :
    Navigate to samples
    Execute Run As... -> Java Application.
+
+4b) Test drive JavaEE samples : web application : 
+   Execute mvn jetty:run to start a jetty server - and then invoke http://localhost:8080/index.jsp in a  browser
+   OR
+   Deploy target/aegis*.war in a Java app server (eg Tomcat) - and invoke : http://<host>:<port>/<deploy>/index.jsp in a browser
+   The wizard will guide thru the next steps, which involve :
+      - Setting up bootstrap info in a local directory
+      - Creating up a sample session (simple cookie)
+      - Protecting a webcmd app in 2 modes : direct invocation of Aegis PEP within the app or via a servlet Filter
+       
 
 Dependencies:
 ==============
@@ -50,10 +60,11 @@ TODO : Add aegis-core to managed maven.
 Directory structure:
 ====================
 
-src/sample/java/ : contains source files for PEP samples
-src/main/java/ : contains source files
-src/test/java : Junti tests and  
-src/main/resources/ : Properties file
+src/main/java/ : contains source files of samples
+src/main/java/samples/CustomEvaluator : contains source files of Aegis plugins
+src/main/java/samples/filter : contains source file of a servlet filter based PEP
+src/test/java : Junit test
+src/main/resources/ : Properties file used by the samples
 
 CLI commands To build and run:
 ==============================
@@ -67,4 +78,6 @@ Execute tests
 # Cleanup
 # mvn clean
  
+# Jetty
+# mvn jetty:run
 

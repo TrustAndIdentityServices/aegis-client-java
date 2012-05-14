@@ -1,0 +1,5 @@
+WCG_L0CMD|webcmdGroup|L0CMD||
+WCG_L1CMD|webcmdGroup|L1CMD||
+WCG_L2CMD|webcmdGroup|L2CMD||
+BR_BUYER|BusinessRole|BUYER||
+BR_SELLER|BusinessRole|SELLER||
