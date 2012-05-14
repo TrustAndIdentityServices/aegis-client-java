@@ -41,54 +41,53 @@ try {
 <br><input type="hidden" name="basedir" value="<%=AEGIS_BASE_DIR%>" value="cmdA1" />
 </form>
 <%
-        return;
-    }
+    } else {
 %>
 <h2>webcmd : <%=webcmd%></h2>
 <%
 
-    // Check if user is allowed to execute the web command
+        // Check if user is allowed to execute the web command
 
-    // STEP 1 : get a PDP instance - you can cache this instance
+        // STEP 1 : get a PDP instance - you can cache this instance
 
-    String pdpPropertiesFile = AEGIS_BASE_DIR+"/PDPSessionPolicy.properties";
-    // Get a PDP instance by passing it bootstrap info via :
-    // (1) Load Properties or (2) Passing properties file name
-    //
-    // Method 1
-    Properties props = new Properties();
-    FileInputStream in = new FileInputStream(pdpPropertiesFile);
-    props.load(in);
-    in.close();
-    PolicyDecisionPoint pdp = PolicyEnforcementPoint.getPDP(props);
-    // Method 2 : 
-    //PolicyDecisionPoint pdp = PolicyEnforcementPoint.getPDP(pdpPropertiesFile);
+        String pdpPropertiesFile = AEGIS_BASE_DIR+"/PDPSessionPolicy.properties";
+        // Get a PDP instance by passing it bootstrap info via :
+        // (1) Load Properties or (2) Passing properties file name
+        //
+        // Method 1
+        Properties props = new Properties();
+        FileInputStream in = new FileInputStream(pdpPropertiesFile);
+        props.load(in);
+        in.close();
+        PolicyDecisionPoint pdp = PolicyEnforcementPoint.getPDP(props);
+        // Method 2 : 
+        //PolicyDecisionPoint pdp = PolicyEnforcementPoint.getPDP(pdpPropertiesFile);
 
-    // Step 2 : Identify Target - the protected resource
-    Target resource = new Target("webcmd", webcmd);
+        // Step 2 : Identify Target - the protected resource
+        Target resource = new Target("webcmd", webcmd);
 
-    // Step 3 : Build Environment
-    Environment env = new Environment("", "env");
-    env.setAttribute("USERSESSION", getSession(request));
-    env.setAttribute("userid", userid);
-
-    // Step 4 : Get Decision from PDP by passing in target and environment
-    Decision decision = pdp.getPolicyDecision( resource, env);
-    String type = decision.getTypeStr(); // PERMIT or DENY
-    List<Advice> advices = decision.getAdvices();
+        // Step 3 : Build Environment
+        Environment env = new Environment("", "env");
+        env.setAttribute("USERSESSION", getSession(request));
+        env.setAttribute("userid", userid);
+    
+        // Step 4 : Get Decision from PDP by passing in target and environment
+        Decision decision = pdp.getPolicyDecision( resource, env);
+        String type = decision.getTypeStr(); // PERMIT or DENY
+        List<Advice> advices = decision.getAdvices();
 %>
 <br>Effect :<%=type%>
 <br>Complete Decision object : <%=decision.toString()%>
 <%
-    // Step 5 : Execute Obligations
-    if (decision.getObligations() != null) {
-        // Follow obligations if specified : eg to log the access
+        // Step 5 : Execute Obligations
+        if (decision.getObligations() != null) {
+            // Follow obligations if specified : eg to log the access
+        }
+
+        // Step 6 : [Optional] if DENY,  parse Advices to facilitate further action to 
+        //          potentially PERMIT access (eg authenticate at different level);
+
     }
-    
-
-    // Step 6 : [Optional] if DENY,  parse Advices to facilitate further action to 
-    //          potentially PERMIT access (eg authenticate at different level);
-
 %>
 <br>
 <br>

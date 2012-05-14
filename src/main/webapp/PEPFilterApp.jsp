@@ -16,10 +16,12 @@ try {
 <br><input type="hidden" name="basedir" value="<%=AEGIS_BASE_DIR%>" value="cmdA1" />
 </form>
 <%
-        return;
-    }
+    } else {
 %>
 <h2>webcmd : <%=webcmd%> IS PERMITTED to be EXECUTED</h2>
+<%
+    }
+%>
 <br>
 <br>
 <br><a href="PEPFilterApp.jsp?basedir=<%=AEGIS_BASE_DIR%>">Try another Command</a>

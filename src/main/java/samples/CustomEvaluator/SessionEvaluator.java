@@ -28,9 +28,12 @@ public class SessionEvaluator extends BaseAssertionEvaluator
         if (sessiondata != null) {
             return;
         }
+        Object stuff = context.getEnvValue(SESSION_ATTR_KEY);
+        if (stuff == null)
+            return;
+
         // Process USERSESSION cookie
         HashMap<String,Object> data = new HashMap<String,Object>();
-        Object stuff = context.getEnvValue(SESSION_ATTR_KEY);
         
         // Start with assuming user is not authenticated
         data.put(SessionEvaluator.AUTHENTICATED, new Boolean(false));

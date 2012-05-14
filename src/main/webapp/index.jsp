@@ -52,17 +52,17 @@ try {
 }
 %>
 </code>
-<p><code>webcmdGroup</code> and <code>BusinessRole</code> membership specfied in <code>attrgroups.txt</code> file and <code>groupmember/</code> directory</p>
-<p><b>MetaData</b> (<code><%=AEGIS_BASE_DIR%>/MetaData.properties</code> )</p>
+<p><code>webcmdGroup</code> and <code>BusinessRole</code> membership is specified in <code>attrgroups.txt</code> file and <code>groupmember/</code> directory</p>
+<p><b>MetaData</b> (<code><%=AEGIS_BASE_DIR%>/MetaDataSessionPolicy.properties</code> )</p>
 <p> The MetaData is authored by a <i>Policy Plugin Developer</i> with input from <i>Business Owners</i>. It encapsulates the vocabulary used to describe policy, facilitates mapping of runtime artifacts (eg attributes and sessions in this sample) and provides the plugin implementation classes.
 Following plugins are used in this sample :
-<li> <code>FlatFile</code> plugin to evaluate group memberships for <code>webcmdGroup</code> and <code>BusinessRole</code> membership. This plugin is provided as part of core Aegis jar.
-<li> custom <code>SessionCookie</code> based assertion plugin for evaluating other session attributes in the policy. This plugin is part of this sample.
+<ili> <code>FlatFile</code> plugin to evaluate group memberships for <code>webcmdGroup</code> and <code>BusinessRole</code> membership. This plugin is provided as part of core Aegis jar.
+<li> custom <code>SessionEvaluator</code> based assertion plugin for evaluating other session attributes in the policy. This plugin is part of this sample.
 </p>
 
 <p><b>Policy Enforcement</b>:
 <p>Two PEP mechanisms are demonstrated :
-<li>Programmatic - <i>Application developer</i> directly invokes Aegis Policy Enforcement Point API : <a href="PEPDirectApp.jsp?basedir=<%=AEGIS_BASE_DIR%>">PEPDirectApp</a>
+<li>Programmatic - <i>Application Developer</i> directly invokes Aegis Policy Enforcement Point API : <a href="PEPDirectApp.jsp?basedir=<%=AEGIS_BASE_DIR%>">PEPDirectApp</a>
 <li>Http Servlet Filter provided by the platform invokes Aegis Policy Enforcement Point API : <a href="PEPFilterApp.jsp?basedir=<%=AEGIS_BASE_DIR%>">PEPFilterApp</a>
 </p>
 </body>
